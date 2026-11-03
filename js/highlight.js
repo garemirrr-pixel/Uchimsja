@@ -3,7 +3,7 @@
   const KW = new Set("and as assert break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case".split(" "));
   const CONST = new Set(["True", "False", "None"]);
   const BI = new Set("print input len range int float str bool list tuple set dict type sum min max sorted enumerate zip abs round any all id repr isinstance deepcopy".split(" "));
-  const RE_SRC = /(#[^\n]*)|((?:[rRfFbBuU]{1,2})?(?:"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'))|(\b\d[\d_]*(?:\.[\d_]*)?(?:[eE][+-]?\d+)?\b|\.\d+)|([A-Za-z_Ѐ-ӿ][\wЀ-ӿ]*)|([+\-*/%=<>!&|^~]+|[()[\]{}:,.])/.source;
+  const RE_SRC = /(#[^\n]*)|((?:[rRfFbBuU]{1,2})?(?:"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'))|(\b\d[\d_]*(?:\.[\d_]*)?(?:[eE][+-]?\d+)?\b|\.\d+)|([A-Za-z_\u0400-\u04FF][\w\u0400-\u04FF]*)|([+\-*/%=<>!&|^~]+|[()[\]{}:,.])/.source;
 
   function esc(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

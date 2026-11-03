@@ -1,6 +1,7 @@
 /* Python runner: Pyodide inside a Web Worker (so infinite loops can be killed). */
 (function () {
-  const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+  // A host can serve its own copy of Pyodide by setting window.PYODIDE_BASE.
+  const PYODIDE = window.PYODIDE_BASE || "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
 
   const HELPER = `
 import sys, io, traceback, linecache
@@ -45,7 +46,7 @@ def __run(code, inputs, echo):
   const WORKER_SRC = `
 importScripts(${JSON.stringify(PYODIDE + "pyodide.js")});
 let py = null;
-const ready = loadPyodide({ indexURL: ${JSON.stringify(PYODIDE)} }).then(p => {
+const ready = loadPyodide(Object.assign({ indexURL: ${JSON.stringify(PYODIDE)} }, ${JSON.stringify(window.PYODIDE_STDLIB ? { stdLibURL: window.PYODIDE_STDLIB } : {})})).then(p => {
   py = p;
   py.runPython(${JSON.stringify(HELPER)});
   postMessage({ type: "ready" });
